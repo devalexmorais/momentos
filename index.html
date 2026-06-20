@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Não desista de nós dois ❤️</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #1a0011 0%, #2d001a 30%, #4a002b 60%, #1a0011 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: #fff;
+    }
+
+    .hearts-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 20px;
+      animation: floatHeart linear infinite;
+      opacity: 0;
+    }
+
+    @keyframes floatHeart {
+      0% { transform: translateY(100vh) rotate(0deg) scale(0); opacity: 0; }
+      10% { opacity: 0.5; }
+      50% { opacity: 0.25; }
+      90% { opacity: 0.1; }
+      100% { transform: translateY(-10vh) rotate(720deg) scale(1); opacity: 0; }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px 100px;
+    }
+
+    .header {
+      text-align: center;
+      padding: 60px 0 30px;
+    }
+
+    .header h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 3.8rem;
+      background: linear-gradient(45deg, #ff6b9d, #ff2d55, #ff6b9d);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 3s ease infinite;
+    }
+
+    .header .subtitle {
+      font-size: 1.1rem;
+      color: #ffaacc;
+      margin-top: 20px;
+      font-weight: 300;
+      line-height: 1.8;
+      max-width: 650px;
+      margin-left: auto;
+      margin-right: auto;
+      letter-spacing: 0.5px;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .section-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.5rem;
+      text-align: center;
+      color: #ff8fab;
+      margin: 50px 0 30px;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #ff6b9d, transparent);
+      margin: 10px auto 0;
+    }
+
+    /* Slideshow */
+    .slideshow {
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto 20px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+      border: 2px solid rgba(255, 107, 157, 0.2);
+    }
+
+    .slideshow-track {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .slide.active {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      flex-shrink: 0;
+      background: #000;
+    }
+
+    .slide-story {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 60px 25px 25px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.85));
+      text-align: center;
+    }
+
+    .slide-story h3 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.6rem;
+      color: #ffb3c6;
+      margin-bottom: 8px;
+    }
+
+    .slide-story p {
+      font-size: 0.95rem;
+      color: #e0d0d6;
+      line-height: 1.7;
+      font-weight: 300;
+      max-width: 550px;
+      margin: 0 auto;
+    }
+
+    /* Slideshow nav */
+    .slideshow-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slideshow-btn:hover {
+      background: rgba(255,107,157,0.4);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .slideshow-prev { left: 15px; }
+    .slideshow-next { right: 15px; }
+
+    /* Slideshow dots */
+    .slideshow-dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 15px 0 5px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .dot.active {
+      background: #ff6b9d;
+      transform: scale(1.3);
+    }
+
+    .dot:hover {
+      background: rgba(255, 107, 157, 0.5);
+    }
+
+    /* Slide counter */
+    .slide-counter {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #ffaacc;
+      font-weight: 300;
+      letter-spacing: 2px;
+      margin-bottom: 15px;
+    }
+
+    .pause-btn {
+      display: inline-block;
+      background: none;
+      border: 1px solid rgba(255,107,157,0.3);
+      color: #ffaacc;
+      padding: 6px 18px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-left: 12px;
+      font-family: inherit;
+    }
+
+    .pause-btn:hover {
+      background: rgba(255,107,157,0.2);
+    }
+
+    /* Love message card */
+    .love-card {
+      text-align: center;
+      padding: 50px 35px;
+      margin: 40px 0;
+      background: linear-gradient(135deg, rgba(255,107,157,0.08), rgba(255,45,85,0.05));
+      border-radius: 25px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 107, 157, 0.2);
+      position: relative;
+    }
+
+    .love-card::before {
+      content: '\2764';
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2rem;
+      color: #ff2d55;
+      background: #2d001a;
+      padding: 0 15px;
+    }
+
+    .love-card .greeting {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.2rem;
+      color: #ffb3c6;
+      margin-bottom: 20px;
+    }
+
+    .love-card p {
+      font-size: 1rem;
+      color: #d4b3c0;
+      line-height: 2;
+      max-width: 600px;
+      margin: 0 auto;
+      font-weight: 300;
+    }
+
+    .love-card .highlight {
+      color: #ff8fab;
+      font-weight: 400;
+    }
+
+    /* Special section */
+    .special-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+
+    .special-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 18px;
+      padding: 30px 20px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 107, 157, 0.15);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .special-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255, 107, 157, 0.5);
+    }
+
+    .special-card .icon {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+    }
+
+    .special-card .label {
+      font-size: 0.85rem;
+      color: #ffaacc;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 300;
+      margin-bottom: 8px;
+    }
+
+    .special-card .value {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.6rem;
+      color: #ffb3c6;
+    }
+
+    .special-card .value.days {
+      font-size: 2.8rem;
+      color: #ff6b9d;
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* Secret message button */
+    .secret-section {
+      text-align: center;
+      margin: 40px 0;
+    }
+
+    .secret-btn {
+      background: linear-gradient(45deg, #ff2d55, #ff6b9d);
+      border: none;
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 18px 40px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 5px 25px rgba(255, 45, 85, 0.3);
+      letter-spacing: 1px;
+    }
+
+    .secret-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 35px rgba(255, 45, 85, 0.5);
+    }
+
+    /* Secret message modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.85);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(8px);
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: linear-gradient(135deg, #2d001a, #1a0011);
+      border-radius: 25px;
+      padding: 45px 35px;
+      max-width: 580px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      border: 1px solid rgba(255, 107, 157, 0.3);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      animation: fadeIn 0.4s ease;
+      position: relative;
+    }
+
+    .modal-content .close-modal {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 2rem;
+      color: #ff6b9d;
+      cursor: pointer;
+      background: none;
+      border: none;
+      transition: transform 0.3s ease;
+    }
+
+    .modal-content .close-modal:hover {
+      transform: rotate(90deg);
+    }
+
+    .modal-content h2 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2rem;
+      color: #ff8fab;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .modal-content p {
+      color: #d4b3c0;
+      line-height: 2;
+      font-size: 0.95rem;
+      margin-bottom: 15px;
+      font-weight: 300;
+    }
+
+    .modal-content .signature {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.5rem;
+      color: #ffb3c6;
+      text-align: right;
+      margin-top: 20px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9) translateY(20px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 50px 20px 30px;
+    }
+
+    .footer p {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.6rem;
+      color: #ff8fab;
+      line-height: 1.8;
+    }
+
+    .footer .signature {
+      font-size: 1.8rem;
+      color: #ff6b9d;
+      margin-top: 10px;
+    }
+
+    /* Music button */
+    .music-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 100;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #ff2d55, #ff6b9d);
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 5px 20px rgba(255, 45, 85, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .music-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 30px rgba(255, 45, 85, 0.6);
+    }
+
+    .music-btn.playing {
+      animation: spin 3s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Audio player bar */
+    .audio-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 99;
+      background: linear-gradient(90deg, rgba(26,0,17,0.95), rgba(45,0,26,0.95));
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(255, 107, 157, 0.2);
+      padding: 12px 20px 12px 80px;
+      display: none;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .audio-bar.active {
+      display: flex;
+    }
+
+    .audio-bar .song-info {
+      min-width: 140px;
+    }
+
+    .audio-bar .song-info .name {
+      font-size: 0.85rem;
+      color: #ffb3c6;
+      font-weight: 400;
+    }
+
+    .audio-bar .song-info .artist {
+      font-size: 0.7rem;
+      color: #ccb0bb;
+      font-weight: 300;
+    }
+
+    .audio-bar input[type="range"] {
+      flex: 1;
+      -webkit-appearance: none;
+      height: 4px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 2px;
+      outline: none;
+    }
+
+    .audio-bar input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #ff6b9d;
+      cursor: pointer;
+    }
+
+    .audio-bar .time {
+      font-size: 0.75rem;
+      color: #ccb0bb;
+      font-weight: 300;
+      min-width: 35px;
+    }
+
+    .audio-bar .controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .audio-bar .controls button {
+      background: none;
+      border: none;
+      color: #ffb3c6;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      padding: 4px;
+    }
+
+    .audio-bar .controls button:hover {
+      color: #ff6b9d;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .header h1 { font-size: 2.4rem; }
+      .header .subtitle { font-size: 1rem; padding: 0 10px; }
+      .slideshow-track { aspect-ratio: 4 / 5; }
+      .slide-story { padding: 40px 15px 15px; }
+      .slide-story h3 { font-size: 1.3rem; }
+      .slide-story p { font-size: 0.85rem; }
+      .slideshow-btn { width: 35px; height: 35px; font-size: 1.2rem; }
+      .slideshow-prev { left: 8px; }
+      .slideshow-next { right: 8px; }
+      .section-title { font-size: 2rem; }
+      .love-card { padding: 35px 20px; }
+      .love-card .greeting { font-size: 1.8rem; }
+      .love-card p { font-size: 0.9rem; }
+      .special-section { grid-template-columns: 1fr 1fr; }
+      .special-card .value.days { font-size: 2.2rem; }
+      .modal-content { padding: 30px 20px; }
+      .audio-bar { padding: 10px 10px 10px 70px; gap: 8px; flex-wrap: wrap; }
+      .audio-bar .song-info { min-width: 100px; }
+      .audio-bar input[type="range"] { min-width: 60px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="hearts-container" id="heartsContainer"></div>
+
+  <button class="music-btn" id="musicBtn" onclick="toggleMusic()">&#9835;</button>
+
+  <!-- Audio Player Bar -->
+  <div class="audio-bar" id="audioBar">
+    <div class="song-info">
+      <div class="name">Lembrei de Nós</div>
+      <div class="artist">Fabinho Testado</div>
+    </div>
+    <div class="controls">
+      <button onclick="toggleMusic()" id="playPauseBtn">❚❚</button>
+    </div>
+    <input type="range" id="seekBar" value="0" oninput="seekAudio(this.value)">
+    <span class="time" id="currentTime">0:00</span>
+    <span class="time" id="duration">0:00</span>
+  </div>
+
+  <!-- Secret Message Modal -->
+  <div class="modal-overlay" id="secretModal">
+    <div class="modal-content">
+      <button class="close-modal" onclick="closeModal()">&times;</button>
+      <h2>&#10084; Minha última mensagem para você &#10084;</h2>
+      <p>Meu amor,</p>
+      <p>Se você está lendo esta carta, é porque ainda existe no seu coração um espaço para nós. E só por isso eu já sou grato, porque significa que ainda há esperança para o amor mais bonito que já vivi.</p>
+      <p>Eu sei que nem sempre fui perfeito. Sei que errei, que algumas palavras e atitudes minhas te machucaram, e não existe um dia sequer em que eu não pense nisso. A dor de saber que te feri é algo que carrego comigo, porque a última pessoa que eu gostaria de ver sofrer é você.</p>
+      <p>Mas, em meio a tudo isso, eu aprendi. Aprendi que amar não é apenas sentir, é cuidar. É ouvir. É compreender. É escolher a outra pessoa mesmo nos momentos difíceis. E eu escolho você. Escolho você hoje, amanhã e em todos os dias que ainda desejo viver.</p>
+      <p>Você é muito mais do que a mulher que eu amo. Você é o meu abraço favorito, a minha melhor amiga, a minha paz nos dias difíceis e o meu sorriso nos dias felizes. Você é a pessoa com quem eu imagino os meus planos, os meus sonhos e o meu futuro.</p>
+      <p>Não quero apagar o que aconteceu, porque tudo o que vivemos também nos ensinou. Só quero que você me permita mostrar, com atitudes, que posso ser melhor. Que posso cuidar do nosso amor da forma que ele merece. Que posso ser o homem que segura sua mão nos momentos de alegria, mas principalmente nos momentos de medo, dúvida e insegurança.</p>
+      <p>Eu não estou aqui para te pedir que esqueça. Estou aqui para te pedir que acredite. Que acredite em nós, na nossa história, em tudo o que construímos e em tudo o que ainda podemos viver juntos.</p>
+      <p>Porque, apesar das dificuldades, eu continuo olhando para você e tendo a mesma certeza: é você. Sempre foi você.</p>
+      <p>Se você me permitir, quero reconstruir cada ponte que caiu, curar cada ferida que ficou aberta e escrever ao seu lado os capítulos mais felizes da nossa história.</p>
+      <p>Eu te amo com todo o meu coração. E enquanto existir amor dentro de mim, sempre existirá um lugar reservado para você.</p>
+      <div class="signature">Com todo o meu amor,<br>Seu amor. &#10084;</div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>Não desista de nós dois &#10084;</h1>
+      <p class="subtitle">
+        Meu amor, antes de continuar, eu queria que você olhasse para cada foto desta página com calma. Cada uma delas guarda um sorriso, um abraço, uma conversa, uma lembrança e um pedaço da nossa história.
+      </p>
+      <p class="subtitle" style="margin-top: 12px;">
+        Sei que estamos passando por um momento difícil e que existem medos e dúvidas entre nós. Mas quando vejo tudo o que vivemos, fica impossível acreditar que nossa história se resume apenas ao que estamos enfrentando agora. Nós somos muito mais do que este momento.
+      </p>
+      <p class="subtitle" style="margin-top: 12px;">
+        Essas fotos me lembram do quanto fomos felizes, do quanto crescemos juntos e de quantos sonhos construímos lado a lado. E é por isso que peço que você leia cada palavra a seguir com o coração aberto, porque elas vêm do lugar mais sincero dentro de mim: o amor que sinto por você.
+      </p>
+    </div>
+
+    <!-- Gallery Section -->
+    <h2 class="section-title">&#10047; Nossas lembranças &#10047;</h2>
+    <div class="slide-counter" id="slideCounter">
+      <span id="slideIndex">1</span> / <span id="slideTotal">6</span>
+      <button class="pause-btn" id="pauseBtn" onclick="toggleAutoplay()">❚❚ Pausar</button>
+    </div>
+    <div class="slideshow" id="slideshow">
+      <div class="slideshow-track" id="slideshowTrack">
+        <!-- Slides rendered by JS -->
+      </div>
+      <button class="slideshow-btn slideshow-prev" onclick="prevSlide()">&#10094;</button>
+      <button class="slideshow-btn slideshow-next" onclick="nextSlide()">&#10095;</button>
+      <div class="slideshow-dots" id="slideshowDots"></div>
+    </div>
+
+    <!-- Main Love Message -->
+    <div class="love-card">
+      <div class="greeting">Meu amor,</div>
+      <p>
+        Eu não estou aqui para fingir que tudo está bem. Sei que você tem medo, que ainda sente insegurança sobre nós. E eu entendo. Mas quero te pedir uma chance — não com pressa, não com exigências — mas com a certeza de que vou fazer de tudo para te reconquistar.
+      </p>
+      <p style="margin-top: 20px;">
+        <span class="highlight">Eu não quero desistir de nós dois.</span>
+        Acredito que ainda podemos ser muito felizes juntos, aprender com os erros
+        e construir uma relação mais forte e madura.
+      </p>
+      <p style="margin-top: 20px;">
+        Peço a <span class="highlight">Nossa Senhora Aparecida</span> que interceda por nós, que ilumine nossos caminhos e que ela, que é Mãe, cuide do nosso amor com todo o carinho que só uma mãe sabe ter. Sei que sua fé é uma das coisas mais lindas em você, e Deus sabe o quanto eu quero fazer dar certo.
+      </p>
+      <p style="margin-top: 20px;">
+        Tudo o que eu peço é que você confie em mim mais uma vez. Deixa eu te mostrar que você pode confiar no meu amor, que eu vou estar aqui todos os dias, que vamos construir algo lindo juntos.
+        <span class="highlight">Eu amo você.</span> Com toda a minha alma, com cada pedaço de mim. E vou lutar por isso com cada pedaço de mim.
+      </p>
+    </div>
+
+    <!-- Special Dates Section -->
+    <h2 class="section-title">&#10047; O que é nosso &#10047;</h2>
+    <div class="special-section">
+      <div class="special-card">
+        <div class="icon">&#128197;</div>
+        <div class="label">Começamos nossa história</div>
+        <div class="value" id="startDate">Carregando...</div>
+      </div>
+      <div class="special-card">
+        <div class="icon">&#128147;</div>
+        <div class="label">Meu sentimento</div>
+        <div class="value" style="font-size: 1rem; font-family: 'Montserrat', sans-serif; font-weight: 300; line-height: 1.6; color: #ccb0bb;">
+          Não são dias, é muito amor
+        </div>
+      </div>
+      <div class="special-card">
+        <div class="icon">&#127926;</div>
+        <div class="label">Nossa música</div>
+        <div class="value" id="ourSong">
+          <?php /* placeholder */ ?>
+          <span style="font-size: 0.9rem; font-family: 'Montserrat', sans-serif; font-weight: 300; display: block; margin-top: 5px; color: #ccb0bb;">
+            A que toca no nosso coração
+          </span>
+        </div>
+      </div>
+      <div class="special-card">
+        <div class="icon">&#127775;</div>
+        <div class="label">Meu desejo</div>
+        <div class="value" style="font-size: 1rem; font-family: 'Montserrat', sans-serif; font-weight: 300; line-height: 1.6; color: #ccb0bb;">
+          Construir um futuro melhor<br>ao seu lado
+        </div>
+      </div>
+    </div>
+
+    <!-- Secret Message Button -->
+    <div class="secret-section">
+      <button class="secret-btn" onclick="openModal()">&#10084; Ler minha última mensagem &#10084;</button>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>
+        O que eu mais desejo<br>
+        não é voltar ao passado.<br>
+        <span style="color: #ff6b9d;">É construir um futuro melhor ao seu lado.</span>
+      </p>
+      <p style="margin-top: 12px; font-size: 1.1rem; color: #ccb0bb; font-family: 'Montserrat', sans-serif; font-weight: 300;">
+        Porque você é o meu hoje, o meu amanhã, o meu sempre.
+      </p>
+      <div class="signature">Com amor, Alex &#10084;</div>
+    </div>
+  </div>
+
+  <script>
+    // ==============================
+    // CONFIGURE HERE
+    // ==============================
+    // Put the date you started dating (YYYY, MM-1, DD)
+    const START_DATE = new Date(2023, 11, 12); // 12/12/2023 - primeiro beijo
+    // Name of your song
+    const SONG_NAME = 'Lembrei de Nós';
+    const SONG_ARTIST = 'Fabinho Testado';
+    // ==============================
+
+    const photos = [
+      {
+        src: "assets/WhatsApp Image 2026-06-20 at 17.49.01 (1).jpeg",
+        title: "Nosso começo",
+        text: "Lembro como se fosse ontem. Tudo parecia tão novo, tão mágico. O frio na barriga, os olhos brilhando, o sorriso que não cabia no rosto. Ali, naquele momento, algo dentro de mim sabia que você seria especial."
+      },
+      {
+        src: "assets/WhatsApp Image 2026-06-20 at 17.49.00 (1).jpeg",
+        title: "Momentos felizes",
+        text: "Olha só a gente. Sempre juntos, sempre sorrindo. Essa foto me prova que, no fundo, a felicidade existe entre nós — a gente só precisa lembrar como chegar até ela."
+      },
+      {
+        src: "assets/WhatsApp Image 2026-06-20 at 17.49.00 (3).jpeg",
+        title: "Nosso abraço",
+        text: "Nada no mundo me passa tanta segurança quanto seus braços ao redor de mim. Nem todas as dificuldades são maiores que um abraço sincero. E eu sinto tanta falta do seu."
+      },
+      {
+        src: "assets/WhatsApp Image 2026-06-20 at 17.49.00 (2).jpeg",
+        title: "Meu lugar favorito",
+        text: "Pode ser em qualquer lugar do mundo — meu lugar favorito sempre foi e sempre será ao seu lado. É onde eu me sinto em casa, onde eu me sinto completo."
+      },
+      {
+        src: "assets/WhatsApp Image 2026-06-20 at 17.49.00.jpeg",
+        title: "Você e eu",
+        text: "O mundo fica mais bonito quando você está por perto. As cores são mais vivas, o ar parece mais leve. Você tem esse dom — transformar tudo ao redor com a sua presença."
+      },
+      {
+        src: "assets/WhatsApp Image 2026-06-20 at 17.49.01.jpeg",
+        title: "Para sempre",
+        text: "Guardo essa foto com um carinho imenso. Porque ela me lembra do que a gente é capaz de sentir. Não importa o que aconteça, meu coração sempre vai escolher você — em cada vida, em cada tempo, em cada batida."
+      },
+      {
+        src: "assets/primeirotecojuntos.jpeg",
+        title: "Primeira vez rezando juntos",
+        text: "Você acreditou em mim quando eu tinha dificuldade de acreditar. Me ajudou a restaurar minha fé, e ali, em videochamada com você, senti que Deus estava nos ouvindo. Você é a prova viva de que o amor também cura a alma."
+      },
+      {
+        src: "assets/fotopreferida.jpeg",
+        title: "Minha foto preferida",
+        text: "O seu sorriso ilumina o meu mundo. Cada vez que você ri, o céu fica mais azul, o dia fica mais leve, e meu coração se enche de esperança. Seu sorriso é a coisa mais linda que eu já vi — e eu passaria a vida inteira tentando arrancar um sorriso seu."
+      }
+    ];
+
+    // Slideshow
+    let currentSlide = 0;
+    let autoplayInterval = null;
+    let isAutoplay = true;
+
+    const track = document.getElementById('slideshowTrack');
+    const dotsContainer = document.getElementById('slideshowDots');
+    const slideIndexEl = document.getElementById('slideIndex');
+    const slideTotalEl = document.getElementById('slideTotal');
+    const pauseBtn = document.getElementById('pauseBtn');
+
+    slideTotalEl.textContent = photos.length;
+
+    function renderSlides() {
+      photos.forEach((photo, i) => {
+        const slide = document.createElement('div');
+        slide.className = `slide${i === 0 ? ' active' : ''}`;
+        slide.innerHTML = `
+          <img src="${photo.src}" alt="${photo.title}">
+          <div class="slide-story">
+            <h3>${photo.title}</h3>
+            <p>${photo.text}</p>
+          </div>
+        `;
+        track.appendChild(slide);
+
+        const dot = document.createElement('button');
+        dot.className = `dot${i === 0 ? ' active' : ''}`;
+        dot.onclick = () => goToSlide(i);
+        dotsContainer.appendChild(dot);
+      });
+    }
+    renderSlides();
+
+    function goToSlide(index) {
+      const slides = track.querySelectorAll('.slide');
+      const dots = dotsContainer.querySelectorAll('.dot');
+      slides.forEach((s, i) => s.classList.toggle('active', i === index));
+      dots.forEach((d, i) => d.classList.toggle('active', i === index));
+      currentSlide = index;
+      slideIndexEl.textContent = index + 1;
+    }
+
+    function nextSlide() {
+      goToSlide((currentSlide + 1) % photos.length);
+    }
+
+    function prevSlide() {
+      goToSlide((currentSlide - 1 + photos.length) % photos.length);
+    }
+
+    function toggleAutoplay() {
+      isAutoplay = !isAutoplay;
+      pauseBtn.textContent = isAutoplay ? '❚❚ Pausar' : '▶ Play';
+      if (isAutoplay) startAutoplay();
+      else stopAutoplay();
+    }
+
+    function startAutoplay() {
+      stopAutoplay();
+      autoplayInterval = setInterval(nextSlide, 4000);
+    }
+
+    function stopAutoplay() {
+      if (autoplayInterval) {
+        clearInterval(autoplayInterval);
+        autoplayInterval = null;
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') prevSlide();
+      if (e.key === 'ArrowRight') nextSlide();
+    });
+
+    // Touch swipe
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const slideshowEl = document.getElementById('slideshow');
+    slideshowEl.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+    slideshowEl.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      const diff = touchStartX - touchEndX;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) nextSlide();
+        else prevSlide();
+      }
+    }, { passive: true });
+
+    startAutoplay();
+
+    // Date counter
+    function updateDateCounter() {
+      const startDateEl = document.getElementById('startDate');
+      const daysEl = document.getElementById('daysCount');
+
+      const options = { day: 'numeric', month: 'long', year: 'numeric' };
+      startDateEl.textContent = START_DATE.toLocaleDateString('pt-BR', options);
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const start = new Date(START_DATE);
+      start.setHours(0, 0, 0, 0);
+      const diff = Math.floor((today - start) / (1000 * 60 * 60 * 24));
+      daysEl.textContent = diff >= 0 ? diff : 0;
+    }
+    updateDateCounter();
+
+    // Our song
+    if (SONG_NAME) {
+      const songEl = document.getElementById('ourSong');
+      songEl.innerHTML = `${SONG_NAME}${SONG_ARTIST ? '<br><span style="font-size:0.85rem;font-weight:300;color:#ccb0bb;">' + SONG_ARTIST + '</span>' : ''}`;
+    }
+
+    // Hearts
+    function createHeart() {
+      const container = document.getElementById('heartsContainer');
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.innerHTML = ['&#10084;&#65039;', '&#10084;', '&#9829;'][Math.floor(Math.random() * 3)];
+      const size = Math.random() * 18 + 10;
+      heart.style.fontSize = size + 'px';
+      heart.style.left = Math.random() * 100 + '%';
+      heart.style.animationDuration = Math.random() * 6 + 5 + 's';
+      heart.style.animationDelay = Math.random() * 5 + 's';
+      container.appendChild(heart);
+      setTimeout(() => heart.remove(), 15000);
+    }
+    setInterval(createHeart, 900);
+    for (let i = 0; i < 6; i++) setTimeout(createHeart, i * 200);
+
+    // Modal
+    function openModal() {
+      document.getElementById('secretModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('secretModal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // Music player
+    const audio = new Audio('assets/Lembrei de Nos - Fabinho Testado.mp3');
+    audio.loop = true;
+    let isPlaying = false;
+
+    const musicBtn = document.getElementById('musicBtn');
+    const audioBar = document.getElementById('audioBar');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const seekBar = document.getElementById('seekBar');
+    const currentTimeEl = document.getElementById('currentTime');
+    const durationEl = document.getElementById('duration');
+
+    audio.addEventListener('loadedmetadata', () => {
+      durationEl.textContent = formatTime(audio.duration);
+      seekBar.max = audio.duration;
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      seekBar.value = audio.currentTime;
+      currentTimeEl.textContent = formatTime(audio.currentTime);
+    });
+
+    function formatTime(sec) {
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return m + ':' + (s < 10 ? '0' : '') + s;
+    }
+
+    function toggleMusic() {
+      if (!isPlaying) {
+        audio.play();
+        isPlaying = true;
+        musicBtn.classList.add('playing');
+        musicBtn.innerHTML = '&#9835;';
+        playPauseBtn.textContent = '❚❚';
+        audioBar.classList.add('active');
+      } else {
+        audio.pause();
+        isPlaying = false;
+        musicBtn.classList.remove('playing');
+        musicBtn.innerHTML = '&#9835;';
+        playPauseBtn.textContent = '&#9654;';
+      }
+    }
+
+    function seekAudio(value) {
+      audio.currentTime = value;
+      currentTimeEl.textContent = formatTime(audio.currentTime);
+    }
+
+    audio.addEventListener('ended', () => {
+      isPlaying = false;
+      musicBtn.classList.remove('playing');
+      playPauseBtn.textContent = '&#9654;';
+    });
+  </script>
+</body>
+</html>
