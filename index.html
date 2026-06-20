@@ -623,6 +623,9 @@
   <button class="music-btn" id="musicBtn" onclick="toggleMusic()">&#9835;</button>
 
   <!-- Audio Player Bar -->
+  <audio id="audioPlayer" loop preload="auto">
+    <source src="assets/musica.mp3" type="audio/mpeg">
+  </audio>
   <div class="audio-bar" id="audioBar">
     <div class="song-info">
       <div class="name">Lembrei de Nós</div>
@@ -959,10 +962,7 @@
     });
 
     // Music player
-    const audio = new Audio('assets/musica.mp3');
-    audio.loop = true;
-    let isPlaying = false;
-
+    const audio = document.getElementById('audioPlayer');
     const musicBtn = document.getElementById('musicBtn');
     const audioBar = document.getElementById('audioBar');
     const playPauseBtn = document.getElementById('playPauseBtn');
@@ -970,14 +970,42 @@
     const currentTimeEl = document.getElementById('currentTime');
     const durationEl = document.getElementById('duration');
 
+    function toggleMusic() {
+      if (audio.paused) {
+        audio.play().catch(e => console.log('Erro ao tocar:', e));
+      } else {
+        audio.pause();
+      }
+    }
+
+    audio.addEventListener('play', () => {
+      musicBtn.classList.add('playing');
+      playPauseBtn.textContent = '❚❚';
+      audioBar.classList.add('active');
+    });
+
+    audio.addEventListener('pause', () => {
+      musicBtn.classList.remove('playing');
+      playPauseBtn.textContent = '▶';
+    });
+
     audio.addEventListener('loadedmetadata', () => {
       durationEl.textContent = formatTime(audio.duration);
       seekBar.max = audio.duration;
     });
 
+    audio.addEventListener('error', () => {
+      console.log('Erro ao carregar audio. Caminho:', audio.src);
+    });
+
     audio.addEventListener('timeupdate', () => {
       seekBar.value = audio.currentTime;
       currentTimeEl.textContent = formatTime(audio.currentTime);
+    });
+
+    audio.addEventListener('ended', () => {
+      musicBtn.classList.remove('playing');
+      playPauseBtn.textContent = '▶';
     });
 
     function formatTime(sec) {
@@ -986,33 +1014,10 @@
       return m + ':' + (s < 10 ? '0' : '') + s;
     }
 
-    function toggleMusic() {
-      if (!isPlaying) {
-        audio.play();
-        isPlaying = true;
-        musicBtn.classList.add('playing');
-        musicBtn.innerHTML = '&#9835;';
-        playPauseBtn.textContent = '❚❚';
-        audioBar.classList.add('active');
-      } else {
-        audio.pause();
-        isPlaying = false;
-        musicBtn.classList.remove('playing');
-        musicBtn.innerHTML = '&#9835;';
-        playPauseBtn.textContent = '&#9654;';
-      }
-    }
-
     function seekAudio(value) {
       audio.currentTime = value;
       currentTimeEl.textContent = formatTime(audio.currentTime);
     }
-
-    audio.addEventListener('ended', () => {
-      isPlaying = false;
-      musicBtn.classList.remove('playing');
-      playPauseBtn.textContent = '&#9654;';
-    });
   </script>
 </body>
 </html>
