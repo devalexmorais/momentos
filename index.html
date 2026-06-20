@@ -812,6 +812,11 @@
         src: "assets/fotopreferida.jpeg",
         title: "Minha foto preferida",
         text: "O seu sorriso ilumina o meu mundo. Cada vez que você ri, o céu fica mais azul, o dia fica mais leve, e meu coração se enche de esperança. Seu sorriso é a coisa mais linda que eu já vi — e eu passaria a vida inteira tentando arrancar um sorriso seu."
+      },
+      {
+        src: "assets/video/flor.mp4",
+        title: "A flor que quase me fez cair",
+        text: "Foi quando peguei uma flor para você e quase caí. Mas valeu a pena só pra ver o seu sorriso."
       }
     ];
 
@@ -832,8 +837,13 @@
       photos.forEach((photo, i) => {
         const slide = document.createElement('div');
         slide.className = `slide${i === 0 ? ' active' : ''}`;
+        const isVideo = photo.src.endsWith('.mp4');
         slide.innerHTML = `
-          <img src="${photo.src}" alt="${photo.title}">
+          ${isVideo ? `
+            <video src="${photo.src}" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:contain;background:#000;"></video>
+          ` : `
+            <img src="${photo.src}" alt="${photo.title}">
+          `}
           <div class="slide-story">
             <h3>${photo.title}</h3>
             <p>${photo.text}</p>
@@ -852,10 +862,18 @@
     function goToSlide(index) {
       const slides = track.querySelectorAll('.slide');
       const dots = dotsContainer.querySelectorAll('.dot');
-      slides.forEach((s, i) => s.classList.toggle('active', i === index));
+      slides.forEach((s, i) => {
+        s.classList.toggle('active', i === index);
+        const video = s.querySelector('video');
+        if (video) {
+          if (i === index) video.play();
+          else { video.pause(); video.currentTime = 0; }
+        }
+      });
       dots.forEach((d, i) => d.classList.toggle('active', i === index));
       currentSlide = index;
       slideIndexEl.textContent = index + 1;
+      if (isAutoplay) restartAutoplay();
     }
 
     function nextSlide() {
@@ -875,7 +893,14 @@
 
     function startAutoplay() {
       stopAutoplay();
-      autoplayInterval = setInterval(nextSlide, 4000);
+      const slides = track.querySelectorAll('.slide');
+      const hasVideo = slides[currentSlide]?.querySelector('video');
+      const delay = hasVideo ? 15000 : 6000;
+      autoplayInterval = setInterval(nextSlide, delay);
+    }
+
+    function restartAutoplay() {
+      if (isAutoplay) startAutoplay();
     }
 
     function stopAutoplay() {
